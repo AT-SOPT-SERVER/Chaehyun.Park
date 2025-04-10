@@ -4,6 +4,7 @@ import org.sopt.domain.Post;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 public class PostRepository {
     List<Post> postList = new ArrayList<>();
@@ -24,6 +25,16 @@ public class PostRepository {
         }
 
         return null;
+    }
+
+    public boolean checkSameTitle(String title){
+        for (Post post : postList) {
+            if (Objects.equals(post.getTitle(), title)) {
+                return true;
+            }
+        }
+
+        return false;
     }
 
     public boolean delete(int id) {

@@ -21,15 +21,26 @@ public class Main {
             switch (input) {
                 case "1":
                     System.out.println("\n📝 [게시글 작성]");
-                    System.out.print("📌 제목을 입력해주세요: ");
-                    String title = scanner.nextLine();
-                    while(title.length() > 30 || title.isBlank()){
-                        System.out.println("❌ 제목은 1자 이상 30자 이하로 작성해주세요.");
-                        System.out.print("📌 제목을 다시 입력해주세요: ");
-                        title = scanner.nextLine();
+                    String promptMsg = "📌 제목을 입력해주세요: ";
+                    while (true) {
+                        System.out.print(promptMsg);
+                        String title = scanner.nextLine();
+
+                        if (title.length() > 30 || title.isBlank()) {
+                            System.out.println("❌ 제목은 1자 이상 30자 이하로 작성해주세요.");
+                            promptMsg = "📌 제목을 다시 입력해주세요: ";
+                            continue;
+                        }
+
+                        if (!controller.createPost(title)) {
+                            System.out.println("❌ 이미 존재하는 제목입니다. 다른 제목을 사용해주세요.");
+                            promptMsg = "📌 제목을 다시 입력해주세요: ";
+                            continue;
+                        } else {
+                            System.out.println("✅ 게시글이 성공적으로 저장되었습니다!");
+                            break;
+                        }
                     }
-                    controller.createPost(title);
-                    System.out.println("✅ 게시글이 성공적으로 저장되었습니다!");
                     break;
 
                 case "2":

@@ -9,10 +9,13 @@ public class PostService {
     private final PostRepository postRepository = new PostRepository();
     private int postId = 1;
 
-    public void createPost(String title) {
+    public boolean createPost(String title) {
+        if (postRepository.checkSameTitle(title)) {
+            return false;
+        }
         Post post = new Post(postId++, title);
-
         postRepository.save(post);
+        return true;
     }
 
     public List<Post> getAllPosts() {
