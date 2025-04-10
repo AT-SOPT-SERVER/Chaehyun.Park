@@ -23,8 +23,8 @@ public class Main {
                     System.out.println("\n📝 [게시글 작성]");
                     System.out.print("📌 제목을 입력해주세요: ");
                     String title = scanner.nextLine();
-                    while(title.length() > 30){
-                        System.out.println("❌ 제목은 30자 이상 작성하실 수 없습니다.");
+                    while(title.length() > 30 || title.isBlank()){
+                        System.out.println("❌ 제목은 1자 이상 30자 이하로 작성해주세요.");
                         System.out.print("📌 제목을 다시 입력해주세요: ");
                         title = scanner.nextLine();
                     }
