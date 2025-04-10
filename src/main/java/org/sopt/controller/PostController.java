@@ -32,4 +32,8 @@ public class PostController {
         return null;
     }
 
+    public boolean checkPostTime(long currentTime){
+        return postService.checkPostTime(currentTime);
+    }
+
 }

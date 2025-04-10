@@ -8,6 +8,8 @@ import java.util.List;
 
 public class PostService {
     private final PostRepository postRepository = new PostRepository();
+    private static final long MINIMUM_INTERVAL = 180_000;
+    private long lastPostCreationTime = 0;
 
     public boolean createPost(String title) {
         if (postRepository.checkSameTitle(title)) {
@@ -16,6 +18,7 @@ public class PostService {
         int id = IdGenerator.generateId();
         Post post = new Post(id, title);
         postRepository.save(post);
+        lastPostCreationTime = System.currentTimeMillis();
         return true;
     }
 
@@ -33,5 +36,9 @@ public class PostService {
 
     public boolean updatePostTitle(int id, String newTitle) {
         return postRepository.update(id, newTitle);
+    }
+
+    public boolean checkPostTime(long currentTime){
+        return lastPostCreationTime == 0 || (currentTime - lastPostCreationTime >= MINIMUM_INTERVAL);
     }
 }

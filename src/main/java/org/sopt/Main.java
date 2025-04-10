@@ -21,6 +21,13 @@ public class Main {
             switch (input) {
                 case "1":
                     System.out.println("\n📝 [게시글 작성]");
+
+                    long currentTime = System.currentTimeMillis();
+                    if(!controller.checkPostTime(currentTime)) {
+                        System.out.println("❌ 새로운 게시글은 마지막 게시글 작성 이후 3분 후에 작성할 수 있습니다.");
+                        break;
+                    }
+
                     String promptMsg = "📌 제목을 입력해주세요: ";
                     while (true) {
                         System.out.print(promptMsg);
