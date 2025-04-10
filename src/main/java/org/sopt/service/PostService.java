@@ -1,19 +1,20 @@
 package org.sopt.service;
 
 import org.sopt.domain.Post;
+import org.sopt.global.util.IdGenerator;
 import org.sopt.repository.PostRepository;
 
 import java.util.List;
 
 public class PostService {
     private final PostRepository postRepository = new PostRepository();
-    private int postId = 1;
 
     public boolean createPost(String title) {
         if (postRepository.checkSameTitle(title)) {
             return false;
         }
-        Post post = new Post(postId++, title);
+        int id = IdGenerator.generateId();
+        Post post = new Post(id, title);
         postRepository.save(post);
         return true;
     }
