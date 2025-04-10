@@ -23,6 +23,11 @@ public class Main {
                     System.out.println("\n📝 [게시글 작성]");
                     System.out.print("📌 제목을 입력해주세요: ");
                     String title = scanner.nextLine();
+                    while(title.length() > 30){
+                        System.out.println("❌ 제목은 30자 이상 작성하실 수 없습니다.");
+                        System.out.print("📌 제목을 다시 입력해주세요: ");
+                        title = scanner.nextLine();
+                    }
                     controller.createPost(title);
                     System.out.println("✅ 게시글이 성공적으로 저장되었습니다!");
                     break;
