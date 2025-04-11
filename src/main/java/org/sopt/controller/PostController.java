@@ -36,4 +36,8 @@ public class PostController {
         return postService.checkPostTime(currentTime);
     }
 
+    public boolean checkSameTitle(String title){
+        return postService.checkSameTitle(title);
+    }
+
 }

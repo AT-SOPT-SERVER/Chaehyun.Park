@@ -12,7 +12,7 @@ public class PostService {
     private long lastPostCreationTime = 0;
 
     public boolean createPost(String title) {
-        if (postRepository.checkSameTitle(title)) {
+        if (checkSameTitle(title)) {
             return false;
         }
         int id = IdGenerator.generateId();
@@ -40,5 +40,9 @@ public class PostService {
 
     public boolean checkPostTime(long currentTime){
         return lastPostCreationTime == 0 || (currentTime - lastPostCreationTime >= MINIMUM_INTERVAL);
+    }
+
+    public boolean checkSameTitle(String title){
+        return postRepository.checkSameTitle(title);
     }
 }
