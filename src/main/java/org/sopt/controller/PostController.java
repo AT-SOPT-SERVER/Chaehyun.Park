@@ -1,43 +1,60 @@
 package org.sopt.controller;
 
 import org.sopt.domain.Post;
+import org.sopt.dto.PostRequest;
+import org.sopt.global.response.ApiResponse;
+import org.sopt.global.response.enums.SuccessCode;
 import org.sopt.service.PostService;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+@RestController
 public class PostController {
-    private final PostService postService = new PostService();
 
-    public boolean createPost(final String title) {
-        return postService.createPost(title);
+    private final PostService postService;
+
+    public PostController(PostService postService){
+        this.postService = postService;
     }
 
-    public List<Post> getAllPosts() {
-        return postService.getAllPosts();
+    @PostMapping("/post")
+    public ResponseEntity<ApiResponse<Void>> createPost(@RequestBody PostRequest request) {
+        postService.createPost(request.title());
+        return ResponseEntity
+                .status(SuccessCode.OK.getHttpStatus())
+                .body(ApiResponse.success(SuccessCode.OK));
     }
 
-    public Post getPostById(int id) {
-        return postService.getPostById(id);
+    @GetMapping("/posts")
+    public ResponseEntity<ApiResponse<List<Post>>> getAllPosts() {
+        return ResponseEntity
+                .status(SuccessCode.OK.getHttpStatus())
+                .body(ApiResponse.success(SuccessCode.OK, postService.getAllPosts()));
     }
 
-    public Boolean updatePostTitle(int id, String newTitle) {
-        return postService.updatePostTitle(id, newTitle);
+    @GetMapping("/posts/{id}")
+    public ResponseEntity<ApiResponse<Post>> getPostById(@PathVariable Long id) {
+        Post post = postService.getPostById(id);
+        return ResponseEntity
+                .status(SuccessCode.OK.getHttpStatus())
+                .body(ApiResponse.success(SuccessCode.OK, post));
     }
 
-    public boolean deletePostById(int id) {
-        return postService.deletePostById(id);
+    @DeleteMapping("/post/{id}")
+    public ResponseEntity<ApiResponse<Void>> deletePost(@PathVariable Long id){
+        postService.deletePost(id);
+        return ResponseEntity
+                .status(SuccessCode.OK.getHttpStatus())
+                .body(ApiResponse.success(SuccessCode.OK));
     }
 
-    public List<Post> searchPostsByKeyword(String keyword) {
-        return null;
+    @PatchMapping("/post/{id}")
+    public ResponseEntity<ApiResponse<Void>> updatePost(@PathVariable Long id, @RequestBody PostRequest request){
+        postService.updatePost(id, request.title());
+        return ResponseEntity
+                .status(SuccessCode.OK.getHttpStatus())
+                .body(ApiResponse.success(SuccessCode.OK));
     }
-
-    public boolean checkPostTime(long currentTime){
-        return postService.checkPostTime(currentTime);
-    }
-
-    public boolean checkSameTitle(String title){
-        return postService.checkSameTitle(title);
-    }
-
 }
