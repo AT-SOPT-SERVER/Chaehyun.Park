@@ -11,7 +11,11 @@ public enum ErrorCode {
     INTERNAL_ERROR(HttpStatus.INTERNAL_SERVER_ERROR, 50000, "서버 내부 오류입니다."),
 
     USER_NOT_FOUND(HttpStatus.NOT_FOUND, 40402, "해당 사용자가 존재하지 않습니다."),
-    EMPTY_NAME(HttpStatus.BAD_REQUEST, 40006, "이름은 비어 있을 수 없습니다."),;
+    EMPTY_NAME(HttpStatus.BAD_REQUEST, 40006, "이름은 비어 있을 수 없습니다."),
+    NAME_TOO_LONG(HttpStatus.BAD_REQUEST, 40009, "이름은 100자를 초과할 수 없습니다."),
+
+    EMPTY_CONTENT(HttpStatus.BAD_REQUEST, 40007, "내용은 비어 있을 수 없습니다."),
+    CONTENT_TOO_LONG(HttpStatus.BAD_REQUEST, 40008, "내용은 1000자를 초과할 수 없습니다.");
 
     private final HttpStatus httpStatus;
     private final int code;

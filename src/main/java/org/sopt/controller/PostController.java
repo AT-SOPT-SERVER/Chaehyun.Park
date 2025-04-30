@@ -1,7 +1,9 @@
 package org.sopt.controller;
 
 import org.sopt.domain.Post;
+import org.sopt.dto.PostAllResponse;
 import org.sopt.dto.PostRequest;
+import org.sopt.dto.PostResponse;
 import org.sopt.global.response.ApiResponse;
 import org.sopt.global.response.enums.SuccessCode;
 import org.sopt.service.PostService;
@@ -20,39 +22,38 @@ public class PostController {
     }
 
     @PostMapping("/post")
-    public ResponseEntity<ApiResponse<Void>> createPost(@RequestBody PostRequest request) {
-        postService.createPost(request.title());
+    public ResponseEntity<ApiResponse<Void>> createPost(@RequestHeader Long userId, @RequestBody PostRequest request) {
+        postService.createPost(request.title(), request.content(), userId);
         return ResponseEntity
                 .status(SuccessCode.OK.getHttpStatus())
                 .body(ApiResponse.success(SuccessCode.OK));
     }
 
     @GetMapping("/posts")
-    public ResponseEntity<ApiResponse<List<Post>>> getAllPosts() {
+    public ResponseEntity<ApiResponse<List<PostAllResponse>>> getAllPosts() {
         return ResponseEntity
                 .status(SuccessCode.OK.getHttpStatus())
                 .body(ApiResponse.success(SuccessCode.OK, postService.getAllPosts()));
     }
 
     @GetMapping("/posts/{id}")
-    public ResponseEntity<ApiResponse<Post>> getPostById(@PathVariable Long id) {
-        Post post = postService.getPostById(id);
+    public ResponseEntity<ApiResponse<PostResponse>> getPostById(@RequestHeader Long userId, @PathVariable Long id) {
         return ResponseEntity
                 .status(SuccessCode.OK.getHttpStatus())
-                .body(ApiResponse.success(SuccessCode.OK, post));
+                .body(ApiResponse.success(SuccessCode.OK, postService.getPostById(id, userId)));
     }
 
     @DeleteMapping("/post/{id}")
-    public ResponseEntity<ApiResponse<Void>> deletePost(@PathVariable Long id){
-        postService.deletePost(id);
+    public ResponseEntity<ApiResponse<Void>> deletePost(@RequestHeader Long userId, @PathVariable Long id){
+        postService.deletePost(id, userId);
         return ResponseEntity
                 .status(SuccessCode.OK.getHttpStatus())
                 .body(ApiResponse.success(SuccessCode.OK));
     }
 
     @PatchMapping("/post/{id}")
-    public ResponseEntity<ApiResponse<Void>> updatePost(@PathVariable Long id, @RequestBody PostRequest request){
-        postService.updatePost(id, request.title());
+    public ResponseEntity<ApiResponse<Void>> updatePost(@RequestHeader Long userId, @PathVariable Long id, @RequestBody PostRequest request){
+        postService.updatePost(id, request.title(), request.content(), userId);
         return ResponseEntity
                 .status(SuccessCode.OK.getHttpStatus())
                 .body(ApiResponse.success(SuccessCode.OK));
