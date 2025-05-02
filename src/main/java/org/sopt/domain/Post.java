@@ -14,7 +14,7 @@ public class Post {
     private PostTag tag;
     private LocalDateTime createdAt;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY) // 기본값은 EAGER
     @JoinColumn(name = "user_id")
     private User user;
 
