@@ -1,9 +1,6 @@
 package org.sopt.domain;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 
 import java.time.LocalDateTime;
 
@@ -13,14 +10,23 @@ public class Post {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String title;
+    private String content;
+    private PostTag tag;
     private LocalDateTime createdAt;
+
+    @ManyToOne(fetch = FetchType.LAZY) // 기본값은 EAGER
+    @JoinColumn(name = "user_id")
+    private User user;
 
     public Post() {
 
     }
 
-    public Post(String title) {
+    public Post(String title, String content, PostTag tag, User user) {
         this.title = title;
+        this.content = content;
+        this.tag = tag;
+        this.user = user;
         this.createdAt = LocalDateTime.now();
     }
 
@@ -32,12 +38,21 @@ public class Post {
         return title;
     }
 
+    public String getContent() {return content; }
+
+    public PostTag getTag(){return tag; }
+
     public LocalDateTime getCreatedAt() {
         return createdAt;
     }
 
-    public void updateTitle(String title) {
-        // 필요하면 검증 로직도 여기에!
+    public User getUser() {
+        return user;
+    }
+
+    public void updatePost(String title, String content, PostTag tag) {
         this.title = title;
+        this.content = content;
+        this.tag = tag;
     }
 }

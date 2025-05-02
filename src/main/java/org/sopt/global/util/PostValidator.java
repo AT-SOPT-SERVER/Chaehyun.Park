@@ -8,7 +8,7 @@ public class PostValidator {
     private PostValidator() {}
 
     public static void validateTitleFormat(String title) {
-        if (title == null || title.trim().isEmpty()) { //문자열에서 앞뒤의 공백을 제거한 새로운 문자열을 반환
+        if (title == null || title.trim().isEmpty()) {
             throw new CustomException(ErrorCode.EMPTY_TITLE);
         }
 
@@ -16,6 +16,18 @@ public class PostValidator {
 
         if (titleLength > 30) {
             throw new CustomException(ErrorCode.TITLE_TOO_LONG);
+        }
+    }
+
+    public static void validateContentFormat(String content){
+        if (content == null || content.trim().isEmpty()) {
+            throw new CustomException(ErrorCode.EMPTY_CONTENT);
+        }
+
+        int contentLength = content.codePointCount(0, content.length());
+
+        if (contentLength > 1000) {
+            throw new CustomException(ErrorCode.CONTENT_TOO_LONG);
         }
     }
 }
