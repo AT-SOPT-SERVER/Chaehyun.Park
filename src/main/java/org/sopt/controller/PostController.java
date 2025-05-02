@@ -1,6 +1,5 @@
 package org.sopt.controller;
 
-import org.sopt.domain.Post;
 import org.sopt.dto.PostAllResponse;
 import org.sopt.dto.PostRequest;
 import org.sopt.dto.PostResponse;
@@ -23,7 +22,7 @@ public class PostController {
 
     @PostMapping("/post")
     public ResponseEntity<ApiResponse<Void>> createPost(@RequestHeader Long userId, @RequestBody PostRequest request) {
-        postService.createPost(request.title(), request.content(), userId);
+        postService.createPost(request.title(), request.content(), request.tag(), userId);
         return ResponseEntity
                 .status(SuccessCode.OK.getHttpStatus())
                 .body(ApiResponse.success(SuccessCode.OK));
@@ -53,7 +52,7 @@ public class PostController {
 
     @PatchMapping("/post/{id}")
     public ResponseEntity<ApiResponse<Void>> updatePost(@RequestHeader Long userId, @PathVariable Long id, @RequestBody PostRequest request){
-        postService.updatePost(id, request.title(), request.content(), userId);
+        postService.updatePost(id, request.title(), request.content(), request.tag(), userId);
         return ResponseEntity
                 .status(SuccessCode.OK.getHttpStatus())
                 .body(ApiResponse.success(SuccessCode.OK));

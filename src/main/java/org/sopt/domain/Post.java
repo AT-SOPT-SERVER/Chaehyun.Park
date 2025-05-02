@@ -11,6 +11,7 @@ public class Post {
     private Long id;
     private String title;
     private String content;
+    private PostTag tag;
     private LocalDateTime createdAt;
 
     @ManyToOne
@@ -21,9 +22,10 @@ public class Post {
 
     }
 
-    public Post(String title, String content, User user) {
+    public Post(String title, String content, PostTag tag, User user) {
         this.title = title;
         this.content = content;
+        this.tag = tag;
         this.user = user;
         this.createdAt = LocalDateTime.now();
     }
@@ -38,6 +40,8 @@ public class Post {
 
     public String getContent() {return content; }
 
+    public PostTag getTag(){return tag; }
+
     public LocalDateTime getCreatedAt() {
         return createdAt;
     }
@@ -46,8 +50,9 @@ public class Post {
         return user;
     }
 
-    public void updateTitle(String title, String content) {
+    public void updatePost(String title, String content, PostTag tag) {
         this.title = title;
         this.content = content;
+        this.tag = tag;
     }
 }

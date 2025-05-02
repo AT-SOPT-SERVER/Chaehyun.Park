@@ -1,6 +1,7 @@
 package org.sopt.service;
 
 import org.sopt.domain.Post;
+import org.sopt.domain.PostTag;
 import org.sopt.domain.User;
 import org.sopt.dto.PostAllResponse;
 import org.sopt.dto.PostResponse;
@@ -29,14 +30,14 @@ public class PostService {
     }
 
     @Transactional
-    public void createPost(final String title, final String content, final Long userId) {
+    public void createPost(final String title, final String content, final PostTag tag, final Long userId) {
         PostValidator.validateTitleFormat(title);
         PostValidator.validateContentFormat(content);
         validateDuplicateTitle(title);
         validatePostTime(userId);
 
         User user = findUserById(userId);
-        Post post = new Post(title, content, user);
+        Post post = new Post(title, content, tag, user);
         postRepository.save(post);
     }
 
@@ -47,14 +48,14 @@ public class PostService {
     }
 
     @Transactional
-    public void updatePost(final Long id, final String title, final String content, final Long userId){
+    public void updatePost(final Long id, final String title, final String content, final PostTag tag, final Long userId){
         Post post = findPostByIdAndUser_Id(id, userId);
 
         PostValidator.validateTitleFormat(title);
         PostValidator.validateContentFormat(content);
         validateDuplicateTitle(title);
 
-        post.updateTitle(title,content);
+        post.updatePost(title,content,tag);
     }
 
     public List<PostAllResponse> getAllPosts() {
