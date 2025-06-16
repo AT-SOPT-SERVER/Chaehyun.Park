@@ -4,7 +4,7 @@ import com.fasterxml.jackson.annotation.JsonInclude;
 import org.sopt.global.response.enums.ErrorCode;
 import org.sopt.global.response.enums.SuccessCode;
 
-@JsonInclude(JsonInclude.Include.NON_NULL) // 이게 뭘까잉
+@JsonInclude(JsonInclude.Include.NON_NULL)
 public class ApiResponse<T> {
 
     private final int status;
