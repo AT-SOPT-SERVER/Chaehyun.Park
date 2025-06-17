@@ -3,6 +3,8 @@ package org.sopt.domain;
 import jakarta.persistence.*;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 public class Post {
@@ -18,6 +20,9 @@ public class Post {
     @JoinColumn(name = "user_id")
     private User user;
 
+    @OneToMany(mappedBy = "post", cascade = CascadeType.REMOVE, orphanRemoval = true)
+    private List<Comment> commentEntities = new ArrayList<>();
+
     public Post() {
 
     }
@@ -30,13 +35,9 @@ public class Post {
         this.createdAt = LocalDateTime.now();
     }
 
-    public Long getId() {
-        return id;
-    }
+    public Long getId() {return id; }
 
-    public String getTitle() {
-        return title;
-    }
+    public String getTitle() {return title; }
 
     public String getContent() {return content; }
 

@@ -21,6 +21,9 @@ public enum ErrorCode {
     // 📌 [400][02][01] - 게시글 작성 관련
     TOO_EARLY_POST(HttpStatus.BAD_REQUEST, 40008, "마지막 게시글 작성 이후 3분이 지나야 합니다."),
 
+    EMPTY_COMMENT(HttpStatus.BAD_REQUEST, 40009, "댓글은 비어 있을 수 없습니다."),
+    COMMENT_TOO_LONG(HttpStatus.BAD_REQUEST, 40010, "댓글은 300자를 초과할 수 없습니다."),
+
     // 📌 [404][02][01] - 리소스 없음 (도메인: 게시글)
     POST_NOT_FOUND(HttpStatus.NOT_FOUND, 40401, "해당 게시글이 존재하지 않습니다."),
 
