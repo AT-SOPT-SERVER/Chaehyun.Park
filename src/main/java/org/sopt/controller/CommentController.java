@@ -2,10 +2,12 @@ package org.sopt.controller;
 
 import org.sopt.dto.CommentByUserResponse;
 import org.sopt.dto.CommentRequest;
+import org.sopt.dto.PostRequest;
 import org.sopt.global.response.ApiResponse;
 import org.sopt.global.response.enums.SuccessCode;
 import org.sopt.service.CommentService;
 import org.springframework.http.ResponseEntity;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -42,4 +44,11 @@ public class CommentController {
                 .body(ApiResponse.success(SuccessCode.OK));
     }
 
+    @PatchMapping("/comment/{id}")
+    public ResponseEntity<ApiResponse<Void>> updateComment(@RequestHeader Long userId, @PathVariable Long id, @RequestBody CommentRequest request){
+        commentService.updateComment(id, request.content(), userId);
+        return ResponseEntity
+                .status(SuccessCode.OK.getHttpStatus())
+                .body(ApiResponse.success(SuccessCode.OK));
+    }
 }

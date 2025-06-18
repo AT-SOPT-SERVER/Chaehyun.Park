@@ -47,6 +47,13 @@ public class CommentService {
         commentRepository.delete(comment);
     }
 
+    @Transactional
+    public void updateComment(final Long id, final String content,final Long userId){
+        Comment comment = findCommentByIdAndUser_Id(id,userId);
+        CommentValidator.validateCommentFormat(content);
+        comment.updateComment(content);
+    }
+
     public List<CommentByUserResponse> getCommentByUser(final Long userId){
         List<Comment> comments = commentRepository.findAllByUser_Id(userId);
         return comments.stream()
