@@ -1,11 +1,14 @@
 package org.sopt.controller;
 
+import org.sopt.dto.CommentByUserResponse;
 import org.sopt.dto.CommentRequest;
 import org.sopt.global.response.ApiResponse;
 import org.sopt.global.response.enums.SuccessCode;
 import org.sopt.service.CommentService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 public class CommentController {
@@ -22,6 +25,13 @@ public class CommentController {
         return ResponseEntity
                 .status(SuccessCode.OK.getHttpStatus())
                 .body(ApiResponse.success(SuccessCode.OK));
+    }
+
+    @GetMapping("/comments")
+    public ResponseEntity<ApiResponse<List<CommentByUserResponse>>> getCommentByUser(@RequestHeader Long userId){
+        return ResponseEntity
+                .status(SuccessCode.OK.getHttpStatus())
+                .body(ApiResponse.success(SuccessCode.OK, commentService.getCommentByUser(userId)));
     }
 
 }

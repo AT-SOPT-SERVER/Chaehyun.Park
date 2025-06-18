@@ -3,6 +3,7 @@ package org.sopt.service;
 import org.sopt.domain.Comment;
 import org.sopt.domain.Post;
 import org.sopt.domain.User;
+import org.sopt.dto.CommentByUserResponse;
 import org.sopt.global.exception.CustomException;
 import org.sopt.global.response.enums.ErrorCode;
 import org.sopt.global.util.CommentValidator;
@@ -11,6 +12,8 @@ import org.sopt.repository.PostRepository;
 import org.sopt.repository.UserRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.util.List;
 
 @Service
 public class CommentService {
@@ -37,6 +40,14 @@ public class CommentService {
         Comment comment = new Comment(content, user, post);
         commentRepository.save(comment);
     }
+
+    public List<CommentByUserResponse> getCommentByUser(final Long userId){
+        List<Comment> comments = commentRepository.findAllByUser_Id(userId);
+        return comments.stream()
+                .map(CommentByUserResponse::of)
+                .toList();
+    }
+
 
     private User findUserById(Long userId){
         return userRepository.findById(userId)
