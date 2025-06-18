@@ -51,6 +51,11 @@ public class Post {
         return user;
     }
 
+    public List<Comment> getCommentEntities() {
+        return commentEntities;
+    }
+
+
     public void updatePost(String title, String content, PostTag tag) {
         this.title = title;
         this.content = content;

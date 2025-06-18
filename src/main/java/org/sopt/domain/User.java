@@ -34,4 +34,9 @@ public class User {
     public List<Post> getPostEntities() {
         return postEntities;
     }
+
+    public List<Comment> getCommentEntities() {
+        return commentEntities;
+    }
+
 }
