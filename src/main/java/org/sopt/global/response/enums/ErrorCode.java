@@ -33,6 +33,8 @@ public enum ErrorCode {
     // 📌 [404][02][03] - 리소스 없음 (도메인: 태그)
     INVALID_TAG(HttpStatus.NOT_FOUND, 40403, "해당 태그가 존재하지 않습니다."),
 
+    COMMENT_NOT_FOUND(HttpStatus.NOT_FOUND, 40404, "해당 댓글이 존재하지 않습니다."),
+
     // 📌 [500][00][00] - 서버 내부 오류
     INTERNAL_ERROR(HttpStatus.INTERNAL_SERVER_ERROR, 50000, "서버 내부 오류입니다.");
 

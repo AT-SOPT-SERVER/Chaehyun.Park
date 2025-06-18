@@ -41,6 +41,12 @@ public class CommentService {
         commentRepository.save(comment);
     }
 
+    @Transactional
+    public void deleteComment(final Long id, final Long userId){
+        Comment comment = findCommentByIdAndUser_Id(id,userId);
+        commentRepository.delete(comment);
+    }
+
     public List<CommentByUserResponse> getCommentByUser(final Long userId){
         List<Comment> comments = commentRepository.findAllByUser_Id(userId);
         return comments.stream()
@@ -57,5 +63,10 @@ public class CommentService {
     private Post findPostById(Long postId){
         return postRepository.findById(postId)
                 .orElseThrow(() -> new CustomException(ErrorCode.POST_NOT_FOUND));
+    }
+
+    private Comment findCommentByIdAndUser_Id(Long id, Long userId) {
+        return commentRepository.findCommentByIdAndUser_Id(id, userId)
+                .orElseThrow(() -> new CustomException(ErrorCode.COMMENT_NOT_FOUND));
     }
 }

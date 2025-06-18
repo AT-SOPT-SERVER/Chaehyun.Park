@@ -34,4 +34,12 @@ public class CommentController {
                 .body(ApiResponse.success(SuccessCode.OK, commentService.getCommentByUser(userId)));
     }
 
+    @DeleteMapping("/comment/{id}")
+    public ResponseEntity<ApiResponse<Void>> deleteComment(@RequestHeader Long userId, @PathVariable Long id){
+        commentService.deleteComment(id,userId);
+        return ResponseEntity
+                .status(SuccessCode.OK.getHttpStatus())
+                .body(ApiResponse.success(SuccessCode.OK));
+    }
+
 }
