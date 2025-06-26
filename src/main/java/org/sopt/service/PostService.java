@@ -59,7 +59,9 @@ public class PostService {
     }
 
     public List<PostAllResponse> getAllPosts() {
-        return postRepository.findAllByTitleAndUserName();
+        return postRepository.findAll().stream()
+                .map(PostAllResponse::of)
+                .toList();
     }
 
     public PostResponse getPostById(final Long id, final Long userId) {
